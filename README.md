@@ -6,7 +6,8 @@
 
 ## Introduction
 
-
+![](https://i.imgur.com/uJSUT6q.jpg)
+* The implementation of **NFV Orchestrator**
 
 ## Requirement
 
@@ -110,7 +111,8 @@ $ sudo apt-get install -y kubelet=1.15.3-00 kubeadm=1.15.3-00 kubectl=1.15.3-00 
 ```bash
 $ sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 ```
-![](https://i.imgur.com/65D4Zyn.png)
+![](https://i.imgur.com/dRFb1Jo.png)
+
 * Set up local kubeconfig
 ```bash
 $ mkdir -p $HOME/.kube
@@ -163,9 +165,11 @@ $ kubectl get nodes
 * [How to get join cmd](https://hackmd.io/@Vcx/HyLSg9xM_#Get-cluster-join-token)
 ```bash
 # kubeadm join <master_ip> --token <token> --discovery-token-ca-cert-hash <ca>
-$ sudo kubeadm join 140.116.247.67:6443 --token 9gws4c.ddca6cgcqna38qd8     --discovery-token-ca-cert-hash sha256:5d521ecbda86a353f2cbc7b735219f03c83a1208f48ee604316db2b34b20d378
+$ sudo kubeadm join <master_ip>:6443 --token 9gws4c.ddca6cgcqna38qd8     --discovery-token-ca-cert-hash sha256:5d521ecbda86a353f2cbc7b735219f03c83a1208f48ee604316db2b34b20d378
 ```
-![](https://i.imgur.com/qvm44Dq.png)
+
+![](https://i.imgur.com/VrB7MPl.png)
+
 * Check cluster node <font color="red">(Run this cmd at master node)</font>
 ```bash
 $ kubectl get nodes
@@ -197,6 +201,98 @@ $ kubectl -n kube-system get pods
 #### Create a NetworkAttachmentDefinition
 
 * Definition of CNI which can be used by multus cni to deploy pod's network
+```bash
+$ cd kube5gnfvo/example/
+$ kubectl apply -f ovs-net-crd.yaml
+```
+![](https://i.imgur.com/iRGOCyz.png)
+* Check create or not
+```bash
+$ $ kubectl describe network-attachment-definitions.k8s.cni.cncf.io
+```
+![](https://i.imgur.com/4lGw7uC.png)
+
+### Etcd Operator
+
+* Create etcd controller and etcd cluster
+```bash
+$ cd kube5gnfvo/example/etcd-cluster/rbac/
+$ ./create_role.sh
+$ cd ..
+$ kubectl apply -f deployment.yaml
+# (Please make sure that etcdclusters.etcd.database.coreos.com CRD in Kubernetes has been created)
+$ kubectl apply -f ./
+```
+![](https://i.imgur.com/71qF5lq.png)
+* Check result
+```bash
+# check pod's deployment
+$ kubectl get pods
+```
+![](https://i.imgur.com/8kLmxmY.png)
+
+### Metrics Server
+
+* Create metrics server api
+```bash
+$ cd kube5gnfvo/example/metrics-server/
+$ kubectl apply -f ./
+```
+![](https://i.imgur.com/R4xgYZ9.png)
+* Check api create or not
+```bash
+$ kubectl api-versions | grep metrics
+```
+![](https://i.imgur.com/LLt1nDq.png)
+
+### Node Exporter
+
+* Create
+```bash
+$ cd kube5gnfvo/example/
+$ kubectl apply -f prom-node-exporter.yaml
+```
+![](https://i.imgur.com/rCnxJul.png)
+```bash
+$ kubectl -n kube-system get pods
+```
+![](https://i.imgur.com/oL5tSPc.png)
+:::info
+Because only **one worker** in cluster,so one daemon pod created
+:::
+
+### KubeVirt
+
+* Create kubevirt-operator
+```bash
+$ cd kube5gnfvo/example/kubevirt/
+$ kubectl apply -f kubevirt-operator.yaml
+```
+![](https://i.imgur.com/0MBMb7d.png)
+* Check kubevirt-operator up or not
+```bash
+$ kubectl -n kubevirt get pods
+```
+![](https://i.imgur.com/iROXPSv.png)
+* Create kubevirt custom resource
+```bash
+# (Please make sure that virt-operator pod in Kubernetes has been Running)
+$ kubectl apply -f kubevirt-cr.yaml
+```
+![](https://i.imgur.com/Sfzz4Jd.png)
+* Check all kubevirt pods ready or not
+```bash
+$ kubectl -n kubevirt get pods
+```
+![](https://i.imgur.com/YwoWqm5.png)
+
+### Kubevirt-py
+
+```bash
+$ pip3 install git+https://github.com/yanyan8566/client-python
+```
+
+### Kube5GNfvo
 
 ## Reference
 
