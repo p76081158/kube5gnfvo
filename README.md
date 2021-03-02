@@ -79,7 +79,7 @@ $ sudo apt-get install -y kubelet=1.15.3-00 kubeadm=1.15.3-00 kubectl=1.15.3-00 
 ```
 ![](https://i.imgur.com/poISMwa.png)
 
-## Setup
+## Prerequisites Setup
 
 ### Kubeadm
 
@@ -292,7 +292,45 @@ $ kubectl -n kubevirt get pods
 $ pip3 install git+https://github.com/yanyan8566/client-python
 ```
 
-### Kube5GNfvo
+## Start Kube5GNfvo
+
+### Create a Configmap that is based on a Config of kubernetes cluster
+
+#### Check kubernetes cluster config
+
+```bash
+$ cat ~/.kube/config
+```
+
+#### Deploy configmap for kube5gnfvo-config
+
+```bash
+$ cd ~/.kube/
+$ kubectl create configmap kube5gnfvo-config --from-file=config=config
+$ kubectl get configmaps
+```
+![](https://i.imgur.com/pQlcJJh.png)
+
+#### Check configmap 
+
+```bash
+$ kubectl get configmaps kube5gnfvo-config -o yaml
+```
+
+### Deploy kube5gnfvo
+
+```bash
+$ cd ~/kube5gnfvo/example/nfvo/
+$ kubectl apply -k .
+```
+![](https://i.imgur.com/FUni83K.png)
+
+### Check pod is running or not
+
+```bash
+$ kubectl get pods | grep kube
+```
+![](https://i.imgur.com/wWO0Y3Z.png)
 
 ## Reference
 
