@@ -90,7 +90,7 @@ $ sudo apt-get install -y kubelet=1.15.3-00 kubeadm=1.15.3-00 kubectl=1.15.3-00 
 * [Check pods can communicate across nodes or not](https://hackmd.io/@Vcx/HyLSg9xM_#Check-pods-can-communicate-across-nodes-or-not)
 * [Swap disabled on every nodes](https://hackmd.io/@Vcx/HyLSg9xM_#Swap-disabled)
 
-#### Create Kubenetes Cluster
+#### Create Kubernetes Cluster
 
 ##### Environment
 
