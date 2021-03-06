@@ -1,0 +1,8 @@
+---
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: ClusterConfiguration
+apiServer:
+  extraArgs:
+    feature-gates: SCTPSupport=true   # --feature-gates=SCTPSupport=True
+networking:
+  podSubnet: "10.244.0.0/16"          # --pod-network-cidr=10.244.0.0/16
