@@ -109,7 +109,9 @@ $ sudo apt-get install -y kubelet=1.15.3-00 kubeadm=1.15.3-00 kubectl=1.15.3-00 
 
 * Create cluster
 ```bash
-$ sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+$ git clone https://github.com/p76081158/kube5gnfvo.git
+$ cd kube5gnfvo/
+$ sudo kubeadm init --config kubeadm-config.yaml
 ```
 ![](https://i.imgur.com/dRFb1Jo.png)
 
@@ -130,7 +132,6 @@ $ kubectl -n kube-system get pods
 ![](https://i.imgur.com/YOGflpX.png)
 * Install [flannel CNI](https://hackmd.io/@Vcx/rJgcDWbfu#flannel-CNI)
 ```bash
-$ git clone https://github.com/p76081158/kube5gnfvo.git
 $ cd kube5gnfvo/example/
 $ kubectl apply -f kube-flannel.yml
 ```
@@ -208,7 +209,7 @@ $ kubectl apply -f ovs-net-crd.yaml
 ![](https://i.imgur.com/iRGOCyz.png)
 * Check create or not
 ```bash
-$ $ kubectl describe network-attachment-definitions.k8s.cni.cncf.io
+$ kubectl describe network-attachment-definitions.k8s.cni.cncf.io
 ```
 ![](https://i.imgur.com/4lGw7uC.png)
 
