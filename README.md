@@ -101,3 +101,5 @@ $ ./quickstart.sh
 ```
 
 ## [Kube5GNfvo - Step by Step](https://hackmd.io/@Vcx/BJ-iDJB7_#Prerequisites-Setup)
+
+## [Deploy free5GC in this environment](https://github.com/p76081158/free5gc-k8s)
