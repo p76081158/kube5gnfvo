@@ -93,12 +93,11 @@ $ sudo /usr/share/openvswitch/scripts/ovs-ctl start
 
 ## Quick Start
 
-:::info
-[Kube5GNfvo - Step by Step](https://hackmd.io/@Vcx/BJ-iDJB7_#Prerequisites-Setup)
-:::
-
 ```bash
+# All in one script
 $ git clone https://github.com/p76081158/kube5gnfvo.git
 $ cd kube5gnfvo/
 $ ./quickstart.sh
 ```
+
+## [Kube5GNfvo - Step by Step](https://hackmd.io/@Vcx/BJ-iDJB7_#Prerequisites-Setup)
